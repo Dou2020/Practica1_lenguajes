@@ -67,16 +67,17 @@ public class controladorInteraccionVisual {
         String text = "";
         int fila = 0;
         String p = visual.getTextoEntrada().getText();
+        System.out.println(p);
         for (int i = 0; i < p.length(); i++) {
             char a = p.charAt(i);
             if ( a != '\n') {
                 text += a;
             }else{
                 linea.add(new lineaEntrada(text,fila));
+                text = "";
                 fila++;
             }
         }
-        visual.getTextoEntrada();
     }
 
     public void evaluar() {
@@ -99,6 +100,7 @@ public class controladorInteraccionVisual {
             AutomataBusqueda automata = new AutomataBusqueda(contenido, txtBuscar);
             List<Integer> listado = automata.listadoPalabras();
             for (int numero : listado) {
+                System.out.println("numero es: "+listado);
                 int index = numero - txtBuscar.length();
                 int end = numero;
                 try {

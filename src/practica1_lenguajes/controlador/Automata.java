@@ -29,7 +29,7 @@ public class Automata {
 
     // Estados de aceptacion con su valor de finalizaciòn
     int[] estadosFinalizacion = {1, 2, 7, 3, 4, 5, 8};
-    String[] descripcionFinalizacion = {"Identificador", "entero", "decimal", "puntuacion", "operador", "agrupacion", "indentificador"};
+    String[] descripcionFinalizacion = {"Identificador", "entero", "decimal", "puntuacion", "operador", "agrupacion", "Indentificador"};
 
     //alfabeto de todos los signos agrupados
     char[] letras = {'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L',
