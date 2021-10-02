@@ -44,13 +44,19 @@ public class AutomataBusqueda {
         boolean seguirLeyendo = true; //establece un estado de verdadero para ingresar como minimo una vez
         char tmp; //este nos permitira almacenar caracter por caracter
         String token = ""; // el token completo
+        
+        if ((posicion < palabra.length()) && ('\n' == palabra.charAt(posicion)) ) {
+            System.out.println("posicion: "+posicion+" Ingreso a un salto de linea");
+            posicion++;
+            return;
+        }
         while ((seguirLeyendo) && (posicion < palabra.length())) {
-            if (Character.isSpaceChar(tmp = palabra.charAt(posicion)) || estadoActual == -1) {
+            if (Character.isSpaceChar(tmp = palabra.charAt(posicion)) || ( !(estadoActual < txtBuscar.length()) && (estadoActual == -1)) ) {
                 seguirLeyendo = false;
             } else {
                 int a = estadoActual +1;
                 System.out.println(
-                        "posicion:" + posicion + " Estado actual "+ estadoActual +  " caracter " + tmp + " transicion a ");
+                        "posicion: " + posicion + " Estado actual "+ estadoActual +  " caracter " + tmp + " transicion a ");
                 if ((estadoActual < txtBuscar.length()) && (txtBuscar.charAt(estadoActual) == tmp)) {
                     token += tmp;
                     estadoActual++;
@@ -58,7 +64,8 @@ public class AutomataBusqueda {
                         listPosicion.add(posicion);
                     }
                 } else { 
-                    estadoActual = -1;
+                    posicion++;
+                    return;
                 }
             }
             posicion++;
@@ -70,11 +77,13 @@ public class AutomataBusqueda {
         if (posicion+1 < palabra.length()) {
             a = posicion+1;
         }
+        // comprobar que el siguiente no sea mayor a la longitud de la cadena de busqueda
         if ((txtBuscar.length()==estadoActual)&&(posicion+1) == palabra.length()) {
             estadoActual = -1;
             return true; 
         }
-        if ((txtBuscar.length()==estadoActual) && (palabra.charAt(a) == ' ')) {
+        // comprobar que esta el automata terminando y evalua se es correcto
+        if ((txtBuscar.length()==estadoActual) && ( (palabra.charAt(a) == ' ') || (palabra.charAt(a) == '\n') ) ) { 
             return true;
         }
         

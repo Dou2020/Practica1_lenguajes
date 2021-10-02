@@ -98,11 +98,11 @@ public class controladorInteraccionVisual {
 
             hilit.removeAllHighlights();
             AutomataBusqueda automata = new AutomataBusqueda(contenido, txtBuscar);
-            List<Integer> listado = automata.listadoPalabras();
+            ArrayList<Integer> listado = automata.listadoPalabras();
             for (int numero : listado) {
-                System.out.println("numero es: "+listado);
-                int index = numero - txtBuscar.length();
-                int end = numero;
+                int index = (numero+1) - txtBuscar.length();
+                int end = numero+1;
+                System.out.println("numero es: "+listado+"inicio: "+index+"final: "+end);
                 try {
                     hilit.addHighlight(index, end, painter);
                     if (txtBuscar.length() <= contenido.length()) {
