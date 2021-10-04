@@ -56,11 +56,12 @@ public class AutomataBusqueda {
             } else {
                 int a = estadoActual +1;
                 System.out.println(
-                        "posicion: " + posicion + " Estado actual "+ estadoActual +  " caracter " + tmp + " transicion a ");
+                        "posicion: " + posicion + " Estado actual "+ estadoActual +  " caracter " + tmp);
                 if ((estadoActual < txtBuscar.length()) && (txtBuscar.charAt(estadoActual) == tmp)) {
                     token += tmp;
                     estadoActual++;
                     if (comprobar()) {
+                        System.out.println("Encontrado el automata en: "+posicion);
                         listPosicion.add(posicion);
                     }
                 } else { 
@@ -74,17 +75,24 @@ public class AutomataBusqueda {
     }
     private boolean comprobar(){
         int a = posicion;
+        int b = posicion;
         if (posicion+1 < palabra.length()) {
             a = posicion+1;
         }
+        
         // comprobar que el siguiente no sea mayor a la longitud de la cadena de busqueda
         if ((txtBuscar.length()==estadoActual)&&(posicion+1) == palabra.length()) {
             estadoActual = -1;
             return true; 
         }
         // comprobar que esta el automata terminando y evalua se es correcto
-        if ((txtBuscar.length()==estadoActual) && ( (palabra.charAt(a) == ' ') || (palabra.charAt(a) == '\n') ) ) { 
-            return true;
+        if ((txtBuscar.length()==estadoActual) && ( (palabra.charAt(a) == ' ') || (palabra.charAt(a) == '\n') ) ) {
+            b = posicion - txtBuscar.length();
+            System.out.println(b);
+            if (palabra.charAt(b) == ' ') {
+                System.out.println("Es la frase completa");
+                return true;
+            }
         }
         
         return false;

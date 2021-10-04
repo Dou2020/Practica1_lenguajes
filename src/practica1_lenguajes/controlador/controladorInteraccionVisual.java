@@ -82,12 +82,12 @@ public class controladorInteraccionVisual {
 
     public void evaluar() {
         actualizarLinea();
-        Automata automata = new Automata();
+        Automata automata = new Automata(visual.getMoAutomata());
         for (lineaEntrada entra : linea) {
             System.out.println(entra.getTexto()+" "+entra.getNoLinea());
             expreciones = automata.evaluando(entra);
             System.out.println(expreciones.toString());
-            ManejadorDeTablaError.llenarTabla(expreciones, visual.getTablaError());
+            ManejadorDeTablaError.llenarTabla(expreciones, visual.getTablaError(),visual.getTablaAceptacion());
         }
     }
 
@@ -102,7 +102,7 @@ public class controladorInteraccionVisual {
             for (int numero : listado) {
                 int index = (numero+1) - txtBuscar.length();
                 int end = numero+1;
-                System.out.println("numero es: "+listado+"inicio: "+index+"final: "+end);
+                System.out.println("numero es: "+numero+" inicio: "+index+" final: "+end);
                 try {
                     hilit.addHighlight(index, end, painter);
                     if (txtBuscar.length() <= contenido.length()) {

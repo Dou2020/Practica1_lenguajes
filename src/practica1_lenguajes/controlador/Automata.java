@@ -1,6 +1,7 @@
 package practica1_lenguajes.controlador;
 
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 import practica1_lenguajes.domain.lexema;
 import practica1_lenguajes.domain.lineaEntrada;
 
@@ -10,35 +11,39 @@ import practica1_lenguajes.domain.lineaEntrada;
  */
 public class Automata {
 
-    String palabra;
-    int posicion = 0;
-    int estadoActual = 0;
+    private String palabra;
+    private int posicion = 0;
+    private int estadoActual = 0;
     ArrayList<lexema> palabras;
 
     //tabla de matriz de tansiciones  -1 no esta en el alfabeto
     //              {\L, \D, \P, \OP, \AP, '.'}              
-    int matriz[][] = {{1, 2, 3, 4, 5, 3}, //S0
-    {1, 8, -1, -1, -1, -1}, //S1
-    {-1, 2, -1, -1, -1, 6}, //S2
-    {-1, -1, -1, -1, -1, -1}, //S3
-    {-1, -1, -1, -1, -1, -1}, //S4
-    {-1, -1, -1, -1, -1, -1}, //S5
-    {-1, 7, -1, -1, -1, -1}, //S6
-    {-1, 7, -1, -1, -1, -1}, //S7
-    {1, 8, -1, -1, -1, -1}};      //s8
+    int matriz[][] = {{ 1, 2,  3,  4,  5, 3}, //S0
+                      { 1, 8, -1, -1, -1,-1}, //S1
+                      {-1, 2, -1, -1, -1, 6}, //S2
+                      {-1,-1, -1, -1, -1,-1}, //S3
+                      {-1,-1, -1, -1, -1,-1}, //S4
+                      {-1,-1, -1, -1, -1,-1}, //S5
+                      {-1, 7, -1, -1, -1,-1}, //S6
+                      {-1, 7, -1, -1, -1,-1}, //S7
+                      { 1, 8, -1, -1, -1,-1}};//s8
 
     // Estados de aceptacion con su valor de finalizaciòn
     int[] estadosFinalizacion = {1, 2, 7, 3, 4, 5, 8};
     String[] descripcionFinalizacion = {"Identificador", "entero", "decimal", "puntuacion", "operador", "agrupacion", "Indentificador"};
-
+    
     //alfabeto de todos los signos agrupados
     char[] letras = {'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L',
         'm', 'M', 'n', 'N', 'o', 'O', 'p', 'P', 'q', 'Q', 'r', 'R', 's', 'S', 't', 'T', 'u', 'U', 'v', 'V', 'w', 'W', 'x', 'X', 'y', 'Y', 'z', 'Z'};
     char[] agrupacion = {'{', '}', '[', ']', '(', ')'};
     char[] signos = {'.', ',', ';', ':'};
     char[] operadores = {'+', '-', '*', '/', '%'};
-
-    public Automata() {
+    
+    JTextArea Mo;
+    public Automata(JTextArea Mo) {
+        this.Mo = Mo;
+        this.Mo.removeAll();
+        this.Mo.append("\n ++++++++++++++ Lectura del automata ++++++++++++++++++");
         palabras = new ArrayList<>();
         //for (int i = 0; i < 9; i++) {
         //    for (int j = 0; j < 6; j++) { System.out.print(""+matriz[i][j]+", "); }  //visualizar el arreglo bidimencional
@@ -50,7 +55,8 @@ public class Automata {
     }
 
     public ArrayList<lexema> evaluando(lineaEntrada linea) {
-        System.out.println("Ingreso al automata logitud: " + linea.getTexto().length());
+        String textoMo ="**********Ingreso al automata logitud: " + linea.getTexto().length()+"****************";
+        System.out.println(textoMo);
         posicion = 0;
         palabra = linea.getTexto();
         int no = linea.getNoLinea();
@@ -124,12 +130,13 @@ public class Automata {
     }
 
     /*
-    * get token funciona para para validar cada uno de los lexemas y darle un token si existe o error
+     * get token funciona para para validar cada uno de los lexemas y darle un token si existe o error
      */
     public void getToken(int fila) {
         estadoActual = 0;  // almacena el el valor del token con el que inicia
 
         boolean seguirLeyendo = true; //establece un estado de verdadero para ingresar como minimo una vez
+        String textoMo;
         char tmp; //este nos permitira almacenar caracter por caracter
         String token = ""; // el token completo
         if ((posicion < palabra.length()) && (Character.isSpaceChar(palabra.charAt(posicion)))) {
@@ -147,21 +154,23 @@ public class Automata {
             } else {// establece que no es un espacio segira leyendo el la cadena
                 // para mi automata  (establece el automata)
                 int estadoTemporal = getSiguienteEstado(estadoActual, getIntCaracter(tmp)); // establece un estado temporal  para el posicionamiento
-                System.out.println(
-                        "posicion:" + posicion + " Estado actual " + estadoActual + " caracter " + tmp + " transicion a " + estadoTemporal);
+                textoMo = "posicion:" + posicion + " Estado actual " + estadoActual + " caracter " + tmp + " transicion a " + estadoTemporal;
+                Mo.append("\n"+textoMo);
+                System.out.println(textoMo);
                 token += tmp;
                 estadoActual = estadoTemporal;
                 if (evaluarEstado()) {
                     int va  = token.length() - 1;
-                    palabras.add(new lexema(token + " " + token.length(), posicion - va, fila, getEstadoAceptacion(estadoActual)));
+                    palabras.add(new lexema(token /*+ " " + token.length()*/, posicion - va, fila, getEstadoAceptacion(estadoActual)));
                 }
                 System.out.println(tmp);
             }
             posicion++;
         }
         //if (estadoActual != 0) {
-        System.out.println(
-                "posicion:" + posicion + "********* Termino en el estado " + getEstadoAceptacion(estadoActual) + " token actual : " + token);
+        textoMo = "posicion:" + posicion + "********* Termino en el estado " + getEstadoAceptacion(estadoActual) + " token actual : " + token+"***********";
+        Mo.append("\n"+textoMo);
+        System.out.println(textoMo);
         //}
         // verificar el estado de aceptación
     }
