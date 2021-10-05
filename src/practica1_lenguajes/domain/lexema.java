@@ -14,7 +14,14 @@ public class lexema {
     private int columna;
     private int fila;
     private String tokens;
+    private int cantidad;
 
+    public lexema(String texto, String tokens, int cantidad) {
+        this.texto = texto;
+        this.tokens = tokens;
+        this.cantidad = cantidad;
+    }
+    
     public lexema(String texto) {
         this.texto = texto;
     }
@@ -26,6 +33,14 @@ public class lexema {
         this.tokens = tokens;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
     public String getTexto() {
         return texto;
     }

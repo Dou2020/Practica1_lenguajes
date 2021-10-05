@@ -161,7 +161,8 @@ public class Automata {
                 estadoActual = estadoTemporal;
                 if (evaluarEstado()) {
                     int va  = token.length() - 1;
-                    palabras.add(new lexema(token /*+ " " + token.length()*/, posicion - va, fila, getEstadoAceptacion(estadoActual)));
+                    String v = posibleEstado(va);
+                    palabras.add(new lexema(v+token /*+ " " + token.length()*/, posicion - va, fila, getEstadoAceptacion(estadoActual)));
                 }
                 System.out.println(tmp);
             }
@@ -174,10 +175,26 @@ public class Automata {
         //}
         // verificar el estado de aceptación
     }
-
+    private String posibleEstado(int va) {
+        int v = posicion-va;
+        if (!Evaluar.ev(getEstadoAceptacion(estadoActual),"Error")) {
+            if (v == 0) {
+                return "";
+            }
+            if ( (0 < v) && Character.isSpaceChar(palabra.charAt(v-1))) {
+                return "";
+            }
+            int a = palabras.size();
+            
+            if (0 < a && Evaluar.ev(palabras.get(a-1).getTokens(),"Error")) {
+                return"Posible ";
+            }
+        }
+        return "";
+    }
     private boolean evaluarEstado() {
         int a = posicion;
-        if (posicion + 1 < palabra.length()) {
+        if (a + 1 < palabra.length()) {
             a = posicion + 1;
         }
         char l = palabra.charAt(a);

@@ -89,7 +89,7 @@ public class AutomataBusqueda {
         if ((txtBuscar.length()==estadoActual) && ( (palabra.charAt(a) == ' ') || (palabra.charAt(a) == '\n') ) ) {
             b = posicion - txtBuscar.length();
             System.out.println(b);
-            if (palabra.charAt(b) == ' ') {
+            if (palabra.charAt(b) == ' ' || palabra.charAt(b)=='\n') {
                 System.out.println("Es la frase completa");
                 return true;
             }

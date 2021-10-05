@@ -1,5 +1,7 @@
 package practica1_lenguajes.Vista;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,14 +14,34 @@ import javax.swing.JTextField;
 import practica1_lenguajes.controlador.controladorInteraccionVisual;
 
 public class InteraccionVisual extends javax.swing.JFrame {
+
     private controladorInteraccionVisual control;
 
     public InteraccionVisual() {
         initComponents();
-        control = new controladorInteraccionVisual(this);
+        KeyListener al = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {//al pulsar y soltar una tecla
+                contenedor.removeAll();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {//al pulsar una tecla
+                 contenedor.removeAll();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {//al soltar la tecla
+                contenedor.removeAll();
+            }
+        };
+        textoEntrada.addKeyListener(al);
         
-        error.setVisible(false);
-        TablaAceptacion.setVisible(false);
+        control = new controladorInteraccionVisual(this);
+        contenedor.removeAll();
+
+        //error.setVisible(false);
+        //TablaAceptacion.setVisible(false);
     }
 
     public JTable getTablaAceptacion() {
@@ -40,6 +62,22 @@ public class InteraccionVisual extends javax.swing.JFrame {
 
     public JPanel getError() {
         return error;
+    }
+
+    public JTable getPorLexema() {
+        return porLexema;
+    }
+
+    public void setPorLexema(JTable porLexema) {
+        this.porLexema = porLexema;
+    }
+
+    public JTable getPorTokens() {
+        return porTokens;
+    }
+
+    public void setPorTokens(JTable porTokens) {
+        this.porTokens = porTokens;
     }
 
     public void setError(JPanel error) {
@@ -105,7 +143,7 @@ public class InteraccionVisual extends javax.swing.JFrame {
     public JTextArea getTextoEntrada() {
         return textoEntrada;
     }
-    
+
     public JButton getSubirArchivo() {
         return subirArchivo;
     }
@@ -137,8 +175,7 @@ public class InteraccionVisual extends javax.swing.JFrame {
     public void setMoAutomata(JTextArea MoAutomata) {
         this.MoAutomata = MoAutomata;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -156,13 +193,21 @@ public class InteraccionVisual extends javax.swing.JFrame {
         evaluar = new javax.swing.JButton();
         contenedor = new javax.swing.JTabbedPane();
         error = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaError = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         TablaAceptacion = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         informacion = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        porTokens = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        porLexema = new javax.swing.JTable();
+        descarga = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         buscar = new javax.swing.JButton();
         textoBuscar = new javax.swing.JTextField();
         textoMensaje = new javax.swing.JLabel();
@@ -203,6 +248,9 @@ public class InteraccionVisual extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel3.setText("No aceptacion");
+
         tablaError.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -215,6 +263,9 @@ public class InteraccionVisual extends javax.swing.JFrame {
             }
         ));
         jScrollPane2.setViewportView(tablaError);
+
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel4.setText("Estado Aceptacion");
 
         TablaAceptacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,27 +280,18 @@ public class InteraccionVisual extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(TablaAceptacion);
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel3.setText("No aceptacion");
-
-        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel4.setText("Estado Aceptacion");
-
         javax.swing.GroupLayout errorLayout = new javax.swing.GroupLayout(error);
         error.setLayout(errorLayout);
         errorLayout.setHorizontalGroup(
             errorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(errorLayout.createSequentialGroup()
-                .addGroup(errorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(errorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane4)
-                    .addGroup(errorLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(errorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 10, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         errorLayout.setVerticalGroup(
             errorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,15 +309,86 @@ public class InteraccionVisual extends javax.swing.JFrame {
 
         contenedor.addTab("Error", error);
 
+        jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Por Tokens");
+
+        porTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(porTokens);
+
+        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Por lexema");
+
+        porLexema.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(porLexema);
+
+        descarga.setText("Descargar");
+        descarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descargaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Texto Entrada:");
+
         javax.swing.GroupLayout informacionLayout = new javax.swing.GroupLayout(informacion);
         informacion.setLayout(informacionLayout);
         informacionLayout.setHorizontalGroup(
             informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
+            .addGroup(informacionLayout.createSequentialGroup()
+                .addGroup(informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(informacionLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6))))
+                .addContainerGap())
+            .addGroup(informacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(descarga)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         informacionLayout.setVerticalGroup(
             informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGroup(informacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(informacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(descarga)
+                    .addComponent(jLabel7))
+                .addGap(8, 8, 8))
         );
 
         contenedor.addTab("Informaciòn", informacion);
@@ -375,9 +488,9 @@ public class InteraccionVisual extends javax.swing.JFrame {
             //Subir archivo y lectura
             control.subirArchivo();
         } catch (IOException ex) {
-           System.out.println(ex);
+            System.out.println(ex);
         }
-        
+
     }//GEN-LAST:event_subirArchivoActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
@@ -387,6 +500,7 @@ public class InteraccionVisual extends javax.swing.JFrame {
 
     private void textoEntradaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_textoEntradaInputMethodTextChanged
         // TODO add your handling code here:
+        System.out.println("Hay un cambio");
     }//GEN-LAST:event_textoEntradaInputMethodTextChanged
 
     private void evaluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_evaluarActionPerformed
@@ -394,11 +508,17 @@ public class InteraccionVisual extends javax.swing.JFrame {
         control.evaluar();
     }//GEN-LAST:event_evaluarActionPerformed
 
+    private void descargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descargaActionPerformed
+        // TODO add your handling code here:
+        control.guardarArchivo();
+    }//GEN-LAST:event_descargaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea MoAutomata;
     private javax.swing.JTable TablaAceptacion;
     private javax.swing.JButton buscar;
     private javax.swing.JTabbedPane contenedor;
+    private javax.swing.JButton descarga;
     private javax.swing.JPanel error;
     private javax.swing.JButton evaluar;
     private javax.swing.JPanel informacion;
@@ -406,11 +526,18 @@ public class InteraccionVisual extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable porLexema;
+    private javax.swing.JTable porTokens;
     private javax.swing.JButton subirArchivo;
     private javax.swing.JTable tablaError;
     private javax.swing.JTextField textoBuscar;

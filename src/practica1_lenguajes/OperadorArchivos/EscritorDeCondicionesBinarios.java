@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import practica1_lenguajes.domain.lexema;
 
 /**
@@ -22,6 +23,10 @@ public class EscritorDeCondicionesBinarios {
     public static final File FILE_CONDICIONES = new File("/media/douglas2021/Dou_job/junio_vaquera/ArchivosBinarios");
 
     public void guardarLexemas(ArrayList<lexema> condiciones) throws IOException, FileNotFoundException {
+        
+        JFileChooser fileChosser = new JFileChooser();
+        int seleccion = fileChosser.showSaveDialog(fileChosser);
+        
         FileOutputStream fileOutput;
         ObjectOutputStream salida;
         for (lexema condicion : condiciones) {
